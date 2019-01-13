@@ -10,7 +10,7 @@ from sys import exit as abandon
 
 class Player(object):
 	""" Main player class """
-	
+
 	def __init__(self, screen, message, fade):
 		self.screen = screen
 		self.message = message
@@ -26,7 +26,7 @@ class Player(object):
 			"left" : [image.load("resources/graphics/player/boat/lMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
 			"right": [image.load("resources/graphics/player/boat/rMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
 			"down": [image.load("resources/graphics/player/boat/dMove/%s.png"%str(i)).convert_alpha() for i in range(5)],
-			"up": [image.load("resources/graphics/player/boat/uMove/%s.png"%str(i)).convert_alpha() for i in range(5)]	
+			"up": [image.load("resources/graphics/player/boat/uMove/%s.png"%str(i)).convert_alpha() for i in range(5)]
 		}
 		# Player's starting image
 		self.image = self.sprites["down"][0]
@@ -198,7 +198,7 @@ class Player(object):
 		else:
 			self.frame = 0
 			self.image = s[self.direction][0]
-		
+
 		# Width and height of image
 		self.imageW = self.image.get_width()
 		self.imageH = self.image.get_height()
@@ -245,7 +245,7 @@ class Player(object):
 				# If not, move the map based on the direction of the player
 				if scrollingCamera:
 					# Player moving right
-					if self.direction == "right": 
+					if self.direction == "right":
 						if self.boundaries[scene][1].collidepoint((self.x+self.dx, self.y+self.dy)):
 							self.mapx = max(self.boundaries[scene][5][0], self.mapx-self.dx*1.5)
 						else:
@@ -326,18 +326,10 @@ class Player(object):
 			self.fade.fadeDark(surf, self.screen, (0,0))
 
 			# Save results to file
-			f = open("save.dat", "w")
-			gems = ""
-			if treasure.gems["earth"]: gems += "earth "
-			if treasure.gems["fire"]: gems += "fire "
-			if treasure.gems["water"]: gems += "water "
-			f.write(gems+"\n")
-			f.write("10"+"\n")
-			f.write(str(treasure.money)+"\n")
-			f.close()
+			saveStats()
 			abandon(0)
 
-	
+
 	def render(self):
 		""" Render player to screen """
 		# If player is alive, render screen
