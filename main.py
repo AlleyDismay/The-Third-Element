@@ -4,6 +4,8 @@
 The Third Element
 ICS3U Final Project
 Paul Krishnamurthy 2015
+
+Edited by AlleyDismay 2018
 """
 
 from pygame import *
