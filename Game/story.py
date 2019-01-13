@@ -1,9 +1,12 @@
 # story.py
 # Paul Krishnamurthy 2015
+
 # Story line class
 
 # The Last Element
 # ICS3U Final Project
+
+# Edited by AlleyDismay 2018
 
 from pygame import *
 from Game.const import *
@@ -25,7 +28,7 @@ class Story:
 		# Main World Shop
 		self.mainWorldShopDialogue = False
 		self.mainWorldShopVisits = 0
-		self.mainWorldShopSpoken = False	
+		self.mainWorldShopSpoken = False
 
 		# Scene intro messages
 		self.waterWorldMsgFinished = False
@@ -63,7 +66,7 @@ class Story:
 			"healthPotion" : [["Potion to increase your health by 20."], (509,419), 50, Rect(509,419,70,70)],
 			"newPrayer" : [["New prayer to use at the church.", "You have %s prayers."%str(self.prayers)], (132,336), 100, Rect(132,336,100,100)],
 		}
-		# Reuturn rect
+		# Return rect
 		self.shopReturn = Rect(833,508,300,300)
 
 		# -----------------------------------
@@ -171,7 +174,7 @@ class Story:
 
 		# If the main narration scene is over
 		# if self.mainWorldShopSpoken and self.mainWorldShopDialogue:
-		# 	self.message.narration(["We already spoke...", 
+		# 	self.message.narration(["We already spoke...",
 		# 							"What do you want now??"], next, "bottom")
 		# 	# Reset message
 		# 	if self.message.done and tmp != self.mainWorldShopVisits:
@@ -221,7 +224,7 @@ class Story:
 
 		# Only do the narration scene once
 		if not self.waterWorldMsgFinished:
-			self.message.narration(["It looks like you found the hidden world of Auquarelle", 
+			self.message.narration(["It looks like you found the hidden world of Auquarelle",
 									"It is said that the rare aqua gem can be found here...",
 									"Beware of what lies behind each door..."
 									], next, "top")
@@ -380,28 +383,29 @@ class Story:
 		self.screen.blit(transform.scale(self.message.background, (600,150)), (259,30))
 
 		# Loop through the dictionary and draw the items
-		for key,val in self.availableItems.items():
-			if key == "speedBoots":
-				self.screen.blit(self.speedBoots, val[1])
+		#for key,val in self.availableItems.items():
 
-			if key == "earthGem":
-				# Animate gem shine
-				self.screen.blit(self.earthGemImage, val[1])
-				self.earthGemFrame += .2
-				if self.earthGemFrame >= 3:
-					self.earthGemFrame = 0
-				self.earthGemImage = self.earthGemSprites[int(self.earthGemFrame)]
+		if not "speedBoots" in self.treasure.collectedItems:
+			self.screen.blit(self.speedBoots, val[1])
 
-			if key == "healthPotion":
-				self.screen.blit(self.healthPotion, (val[1]))
+		if not self.treasure.gems["earth"]:
+			# Animate gem shine
+			self.screen.blit(self.earthGemImage, val[1])
+			self.earthGemFrame += .2
+			if self.earthGemFrame >= 3:
+				self.earthGemFrame = 0
+			self.earthGemImage = self.earthGemSprites[int(self.earthGemFrame)]
 
-			if key == "newPrayer":
-				self.screen.blit(self.newPrayer, (val[1]))
+		if self.treasure.health < 100:
+			self.screen.blit(self.healthPotion, (val[1]))
+
+		#if key == "newPrayer":
+		self.screen.blit(self.newPrayer, (132,336))
 
 		# General description
 		# Loop through items
 		for item in [
-			["speedBoots", Rect(153,133,70,70)], 
+			["speedBoots", Rect(153,133,70,70)],
 			["earthGem", Rect(864,262,self.earthGemImage.get_width()*2,self.earthGemImage.get_height()*2)],
 			["healthPotion", Rect(509,419,70,70)],
 			["newPrayer", Rect(132,336,100,100)]
@@ -471,14 +475,16 @@ class Story:
 			if click:
 				if self.treasure.money >= self.availableItems["healthPotion"][2]:
 					# Add 20 to player's health if they are not at full health
-					if self.treasure.health < 100:
+					if self.treasure.health < 80:
 						self.treasure.health = min(self.treasure.health+20, 100)
 						# Subtract money
 						self.treasure.money -= self.availableItems["healthPotion"][2]
 						# Notification
 						msg("Health increased by 20!")
-					else:
+					elif self.treasure.health == 100:
 						msg("You are already at max health!")
+					else:
+						msg("You are healed %i health points!", (100-self.treasure.health))
 				else:
 					msg("You do not have enough coins to buy this!")
 
