@@ -13,7 +13,7 @@ from Game.const import *
 
 class Fight:
 	""" Main fight class """
-	
+
 	def __init__(self, screen, player, sound, message, treasure):
 		self.screen = screen
 		self.player = player
@@ -193,7 +193,7 @@ class Fight:
 
 			def drawCharacters(shake=False):
 				""" Draws characters """
-				global eImage 
+				global eImage
 				# Reset image to first frame during attack animation
 				try:
 					if shake:
@@ -234,17 +234,17 @@ class Fight:
 
 			if not self.enemyStatsShowing:
 				self.enemyStatsShowing = False
-				# Allow player and enemy to perform attack action
-				# if "sword" in self.treasure.collectedItems:
-				# 	self.power = 5
-				# if "flameSword" in self.treasure.collectedItems:
-				# 	self.power = 7
+				#Allow player and enemy to perform attack action
+				if "sword" in self.treasure.collectedItems:
+					self.power = 5
+				if "flameSword" in self.treasure.collectedItems:
+					self.power = 7
 				# else:
 				# 	print(self.treasure.collectedItems)
-				for weapon in self.treasure.weapons:
-					if weapon in self.treasure.collectedItems:
-						# Set player power to highest possible in collected items
-						self.power = max(self.power, self.treasure.items[weapon][5])
+				#for weapon in self.treasure.weapons:
+					#if weapon in self.treasure.collectedItems:
+						## Set player power to highest possible in collected items
+						#self.power = max(self.power, self.treasure.items[weapon][5])
 
 				# Check selected action
 				if self.message.attackConfirm(click) == "attack" and not self.attacked:
@@ -253,7 +253,7 @@ class Fight:
 					self.eImage = eSprites[0]
 
 					# Player action
-					if self.checkDeath() == "alive":						
+					if self.checkDeath() == "alive":
 						self.playerAttack(self.power, scene, custom)
 					else:
 						self.killFight = True
@@ -388,7 +388,7 @@ class Fight:
 							self.curEnemy = self.newEnemy("earth")
 
 				# Keep track of player attack cycles to avoid duplicate attacks
-				if not self.message.attackConfirm(click) == "attack": 
+				if not self.message.attackConfirm(click) == "attack":
 					self.attacked = False
 
 				# Display inventory
@@ -465,6 +465,6 @@ class Fight:
 					self.message.enemyStats("You encountered %s..."%self.curEnemy[0],
 										"with a max attack power of %d!"%self.curEnemy[2], enter)
 				# Hide enemy stats
-				if enter: 
+				if enter:
 					self.enemyStatsShowing = False
 
