@@ -20,10 +20,11 @@ from json import load
 from random import randint
 from Game.const import *
 from Game.save import *
+from Game.story import Story
 
 # Imports
 classes = ["player", "maps", "message", "fade", "treasure",
-           "sound", "fight", "story", "chest"]
+           "sound", "fight", "chest"]
 for i in classes:
     exec("from Game.%s import %s"%(i, i.title()))
 
@@ -510,7 +511,7 @@ class Game:
                         self.fight.render(self.maps.sceneName, self.fade,
                                           next, self.maps, click)
 
-                saveStats(self.treasure.gems["earth"], self.treasure.gems["fire"], self.treasure.gems["water"], self.treasure.health, self.treasure.money, self.treasure.collectedItems)
+                saveStats(self)
         else:
             self.player.die(click, self.treasure, self.maps, self.fight)
 
