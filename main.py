@@ -510,10 +510,9 @@ class Game:
                     else:
                         self.fight.render(self.maps.sceneName, self.fade,
                                           next, self.maps, click)
-
                 save(self.treasure)
         else:
-            save(treasure)
+            save(self.treasure)
             self.player.die(click, self.treasure, self.maps, self.fight)
 
 
