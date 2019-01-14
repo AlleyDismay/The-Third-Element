@@ -24,27 +24,28 @@ class Fight:
 		self.enemyStatsShowing = False
 		self.font = font.SysFont("Arial", 25)
 		self.font.set_bold(True)
+
 		# Backgrounds
 		self.backgrounds = {
-			"mainWorld" : transform.scale(image.load("resources/graphics/map/backgrounds/mainWorldFight.png").convert(),(1086,600)),
-			"mainWorldSea" : transform.scale(image.load("resources/graphics/map/backgrounds/mainWorldWaterFight.png").convert(),(1086,600)),
-			"waterWorldRoom1" : transform.scale(image.load("resources/graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
-			"waterWorldRoom2" : transform.scale(image.load("resources/graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
-			"waterWorldRoom3" : transform.scale(image.load("resources/graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
-			"waterWorldRoom4" : transform.scale(image.load("resources/graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
-			"waterWorldBoss" : transform.scale(image.load("resources/graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
-			"fireWorldRoom1" : transform.scale(image.load("resources/graphics/map/backgrounds/fireWorldFight.png").convert(),(1086,600)),
-			"fireWorldRoom2" : transform.scale(image.load("resources/graphics/map/backgrounds/fireWorldFight.png").convert(),(1086,600)),
-			"surpriseTemple" : transform.scale(image.load("resources/graphics/map/backgrounds/surpriseTempleFight.png").convert(),(1086,600))
+			"mainWorld" : transform.scale(image.load("graphics/map/backgrounds/mainWorldFight.png").convert(),(1086,600)),
+			"mainWorldSea" : transform.scale(image.load("graphics/map/backgrounds/mainWorldWaterFight.png").convert(),(1086,600)),
+			"waterWorldRoom1" : transform.scale(image.load("graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
+			"waterWorldRoom2" : transform.scale(image.load("graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
+			"waterWorldRoom3" : transform.scale(image.load("graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
+			"waterWorldRoom4" : transform.scale(image.load("graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
+			"waterWorldBoss" : transform.scale(image.load("graphics/map/backgrounds/waterWorldFight.png").convert(),(1086,600)),
+			"fireWorldRoom1" : transform.scale(image.load("graphics/map/backgrounds/fireWorldFight.png").convert(),(1086,600)),
+			"fireWorldRoom2" : transform.scale(image.load("graphics/map/backgrounds/fireWorldFight.png").convert(),(1086,600)),
+			"surpriseTemple" : transform.scale(image.load("graphics/map/backgrounds/surpriseTempleFight.png").convert(),(1086,600))
 		}
 		# Player sprites
-		self.pSprites  = [transform.scale2x(image.load("resources/graphics/player/dMove/%s.gif"%str(i)).convert_alpha()) for i in range(4)]
-		self.pAttackSprites = [transform.scale2x(image.load("resources/graphics/player/attack/%s.png"%str(i)).convert_alpha()) for i in range(3)]
-		self.pAttackWeapon = transform.scale2x(image.load("resources/graphics/player/attack/weapon.png").convert_alpha())
+		self.pSprites  = [transform.scale2x(image.load("graphics/player/dMove/%s.gif"%str(i)).convert_alpha()) for i in range(4)]
+		self.pAttackSprites = [transform.scale2x(image.load("graphics/player/attack/%s.png"%str(i)).convert_alpha()) for i in range(3)]
+		self.pAttackWeapon = transform.scale2x(image.load("graphics/player/attack/weapon.png").convert_alpha())
 		self.fighting = False
 
 		self.enemy = Enemy()
-		self.eHealthBar = transform.scale2x(image.load("resources/graphics/misc/healthBarPlaceholder.png").convert())
+		self.eHealthBar = transform.scale2x(image.load("graphics/misc/healthBarPlaceholder.png").convert())
 		self.healthPercent = []
 		self.healthBar = self.treasure.healthBar
 
@@ -63,8 +64,6 @@ class Fight:
 		self.enemyHealth = 0
 		# If player runs
 		self.fled = False
-		# Attack powers
-		self.power = 1
 		# End fight when death occurs
 		self.killFight = False
 		# Keep track of number of attacks
@@ -234,17 +233,6 @@ class Fight:
 
 			if not self.enemyStatsShowing:
 				self.enemyStatsShowing = False
-				#Allow player and enemy to perform attack action
-				if "sword" in self.treasure.collectedItems:
-					self.power = 5
-				if "flameSword" in self.treasure.collectedItems:
-					self.power = 7
-				# else:
-				# 	print(self.treasure.collectedItems)
-				#for weapon in self.treasure.weapons:
-					#if weapon in self.treasure.collectedItems:
-						## Set player power to highest possible in collected items
-						#self.power = max(self.power, self.treasure.items[weapon][5])
 
 				# Check selected action
 				if self.message.attackConfirm(click) == "attack" and not self.attacked:
@@ -254,7 +242,7 @@ class Fight:
 
 					# Player action
 					if self.checkDeath() == "alive":
-						self.playerAttack(self.power, scene, custom)
+						self.playerAttack(self.player.power, scene, custom)
 					else:
 						self.killFight = True
 
@@ -312,7 +300,7 @@ class Fight:
 					self.message.attackConfirm(False)
 
 					# Explain attack and wait 1 second
-					self.message.quickMessage("You attacked with %s!"%str(self.power))
+					self.message.quickMessage("You attacked with %s!"%str(self.player.power))
 					self.treasure.render(self.screen, True, maps.sceneName=="mainWorld", False, self.message)
 					pause(1300)
 
@@ -393,7 +381,7 @@ class Fight:
 
 				# Display inventory
 				if self.message.attackConfirm(click) == "stats":
-					self.message.quickMessage("Your attack power is %s"%self.power)
+					self.message.quickMessage("Your attack power is %s"%self.player.power)
 					self.treasure.render(self.screen, True, maps.sceneName=="mainWorld", False, self.message)
 					pause(1000)
 

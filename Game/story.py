@@ -10,6 +10,7 @@
 
 from pygame import *
 from Game.const import *
+from Game.save import *
 
 class Story:
 	""" Story line class """
@@ -45,17 +46,17 @@ class Story:
 		# -----------------------------------
 
 		# Speed boots
-		self.speedBoots = transform.scale(image.load("resources/graphics/items/speedBoots.png"), (70,70))
+		self.speedBoots = transform.scale(image.load("graphics/items/speedBoots.png"), (70,70))
 
 		# Earth gem animation
-		self.earthGemSprites = [transform.scale2x(image.load('resources/graphics/items/gems/eGem/eGem%s.png'%str(i))).convert_alpha() for i in range(4)]
+		self.earthGemSprites = [transform.scale2x(image.load('graphics/items/gems/eGem/eGem%s.png'%str(i))).convert_alpha() for i in range(4)]
 		self.earthGemImage = self.earthGemSprites[0]
 		self.earthGemFrame = 0
 
 		# Health Potion
-		self.healthPotion = transform.scale(image.load("resources/graphics/items/healthPotion.png"), (70,70))
+		self.healthPotion = transform.scale(image.load("graphics/items/healthPotion.png"), (70,70))
 		# Buy prayer
-		self.newPrayer = transform.scale(image.load("resources/graphics/items/newPrayer.png"), (100,100))
+		self.newPrayer = transform.scale(image.load("graphics/items/newPrayer.png"), (100,100))
 		# Amount of prayers
 		self.prayers = 7
 
@@ -77,25 +78,25 @@ class Story:
 		self.pReady = False
 
 		self.portals = {
-			"water" : transform.scale(image.load("resources/graphics/misc/waterPortal.png").convert_alpha(), (70,72)),
-			"fire" : transform.scale(image.load("resources/graphics/misc/firePortal.png").convert_alpha(), (70,72)),
-			"earth" : transform.scale(image.load("resources/graphics/misc/earthPortal.png").convert_alpha(), (70,72))
+			"water" : transform.scale(image.load("graphics/misc/waterPortal.png").convert_alpha(), (70,72)),
+			"fire" : transform.scale(image.load("graphics/misc/firePortal.png").convert_alpha(), (70,72)),
+			"earth" : transform.scale(image.load("graphics/misc/earthPortal.png").convert_alpha(), (70,72))
 		}
 		# Degrees for portal rotation
 		self.degrees = 0
 
 		# Water fountain
-		self.fountainSprites = [image.load("resources/graphics/misc/fountain/%s.png"%str(i)).convert_alpha() for i in range(4)]
+		self.fountainSprites = [image.load("graphics/misc/fountain/%s.png"%str(i)).convert_alpha() for i in range(4)]
 		self.fountainFrame = 0
 		self.fountainImage = self.fountainSprites[0]
 
 		# Waterfall
-		self.waterWorldSprites = [image.load("resources/graphics/map/waterWorldAnimation/%s.png"%str(i)).convert() for i in range(5)]
+		self.waterWorldSprites = [image.load("graphics/map/waterWorldAnimation/%s.png"%str(i)).convert() for i in range(5)]
 		self.waterWorldFrame = 0
 		self.waterWorldImage = self.waterWorldSprites[0]
 
 		# Temple Fire
-		self.templeFireSprites = [image.load("resources/graphics/map/templeFire/%s.png"%str(i)).convert_alpha() for i in range(5)]
+		self.templeFireSprites = [image.load("graphics/map/templeFire/%s.png"%str(i)).convert_alpha() for i in range(5)]
 		self.templeFireFrame = 0
 		self.templeFireImage = self.templeFireSprites[0]
 
@@ -386,18 +387,18 @@ class Story:
 		#for key,val in self.availableItems.items():
 
 		if not "speedBoots" in self.treasure.collectedItems:
-			self.screen.blit(self.speedBoots, val[1])
+			self.screen.blit(self.speedBoots, self.availableItems["speedBoots"][1])
 
 		if not self.treasure.gems["earth"]:
 			# Animate gem shine
-			self.screen.blit(self.earthGemImage, val[1])
+			self.screen.blit(self.earthGemImage, self.availableItems["earthGem"][1])
 			self.earthGemFrame += .2
 			if self.earthGemFrame >= 3:
 				self.earthGemFrame = 0
 			self.earthGemImage = self.earthGemSprites[int(self.earthGemFrame)]
 
 		if self.treasure.health < 100:
-			self.screen.blit(self.healthPotion, (val[1]))
+			self.screen.blit(self.healthPotion, (self.availableItems["healthPotion"][1]))
 
 		#if key == "newPrayer":
 		self.screen.blit(self.newPrayer, (132,336))
@@ -474,17 +475,27 @@ class Story:
 
 			if click:
 				if self.treasure.money >= self.availableItems["healthPotion"][2]:
-					# Add 20 to player's health if they are not at full health
-					if self.treasure.health < 80:
+
+					if self.treasure.health == 100:
+						msg("You are already at max health!")
+					else:
+
+						# Heal by as many as 20 points.
 						self.treasure.health = min(self.treasure.health+20, 100)
 						# Subtract money
 						self.treasure.money -= self.availableItems["healthPotion"][2]
-						# Notification
-						msg("Health increased by 20!")
-					elif self.treasure.health == 100:
-						msg("You are already at max health!")
-					else:
-						msg("You are healed %i health points!", (100-self.treasure.health))
+
+						msg("You have been restored to %i HP!"%self.treasure.health)
+
+						save(self.treasure)
+						msg("Your game is saved!")
+
+					#if self.treasure.health < 80:
+						#msg("Health increased by 20!")
+
+					#else:
+						#msg("You are healed %i health points!"%(100-self.treasure.health))
+
 				else:
 					msg("You do not have enough coins to buy this!")
 

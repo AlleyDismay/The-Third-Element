@@ -15,21 +15,21 @@ class Sound(object):
 		# All sound effects
 
 		if not mac:
-			self.coinCollected = mixer.Sound("resources/sound/coinCollected.wav")
+			self.coinCollected = mixer.Sound("sound/coinCollected.wav")
 
 			# I was going to use dictionaries but it was too slow...
 
 			self.themes = {
-				"mainWorldFight" : "resources/sound/mainWorldFight.ogg",
-				"mainWorldTheme" : "resources/sound/mainWorldTheme.ogg",
-				"waterWorldTheme" : "resources/sound/waterWorld.ogg",
-				"shopTheme" : "resources/sound/shop.ogg",
-				"fireWorldTheme" : "resources/sound/fireWorld.ogg",
-				"conclusion" : "resources/sound/conclusion.ogg",
-				"introTheme" : "resources/sound/introTheme.ogg",
-				"churchTheme" : "resources/sound/church.ogg",
-				"castleTheme" : "resources/sound/castle.ogg",
-				"finalTempleTheme" : "resources/sound/temple.ogg"
+				"mainWorldFight" : "sound/mainWorldFight.ogg",
+				"mainWorldTheme" : "sound/mainWorldTheme.ogg",
+				"waterWorldTheme" : "sound/waterWorld.ogg",
+				"shopTheme" : "sound/shop.ogg",
+				"fireWorldTheme" : "sound/fireWorld.ogg",
+				"conclusion" : "sound/conclusion.ogg",
+				"introTheme" : "sound/introTheme.ogg",
+				"churchTheme" : "sound/church.ogg",
+				"castleTheme" : "sound/castle.ogg",
+				"finalTempleTheme" : "sound/temple.ogg"
 			}
 
 			# # Key -> scenename | value -> theme name

@@ -15,24 +15,24 @@ class Treasure:
 		self.screen = screen
 		self.player = player
 		# Resources
-		self.coin = transform.scale(image.load("resources/graphics/misc/coin.png").convert(),(16,16))
+		self.coin = transform.scale(image.load("graphics/misc/coin.png").convert(),(16,16))
 
 		# Heart health system
-		# self.heart = transform.scale(image.load("resources/graphics/misc/heart.png"),(16,16))
+		# self.heart = transform.scale(image.load("graphics/misc/heart.png"),(16,16))
 		# self.hHeart = self.heart.subsurface(0,0,8,16)
 
 		# Fonts
-		self.font = font.Font("resources/fonts/TooSimple.ttf", 12)
+		self.font = font.Font("fonts/TooSimple.ttf", 12)
 		self.arial = font.SysFont("Arial", 25)
 
 		# Gem animation stuff
 		self.gemFrame = 0
 		self.gemSprites = {
-			"earth" : [image.load('resources/graphics/items/gems/eGem/eGem%s.png'%str(i)).convert_alpha() for i in range(4)],
-			"fire" : [image.load('resources/graphics/items/gems/fGem/fGem%s.png'%str(i)).convert_alpha() for i in range(4)],
-			"water" : [image.load('resources/graphics/items/gems/wGem/wGem%s.png'%str(i)).convert_alpha() for i in range(4)]
+			"earth" : [image.load('graphics/items/gems/eGem/eGem%s.png'%str(i)).convert_alpha() for i in range(4)],
+			"fire" : [image.load('graphics/items/gems/fGem/fGem%s.png'%str(i)).convert_alpha() for i in range(4)],
+			"water" : [image.load('graphics/items/gems/wGem/wGem%s.png'%str(i)).convert_alpha() for i in range(4)]
 		}
-		self.noGem = image.load("resources/graphics/items/gems/noGem.gif").convert_alpha()
+		self.noGem = image.load("graphics/items/gems/noGem.gif").convert_alpha()
 		# Check if player has been told to go to the temple
 		self.allGemsCollectedMsg = False
 		# Player's treasures
@@ -51,28 +51,28 @@ class Treasure:
 		# Items -> (name, image, description, coordinates, rect, attack power)
 		self.items = {
 			"sword" : [
-				"sword", 
-				transform.scale2x(image.load("resources/graphics/items/sword.png").convert_alpha()),
+				"sword",
+				transform.scale2x(image.load("graphics/items/sword.png").convert_alpha()),
 				["A sword with an attack", "power of 5."],
 				(363,209),
 				Rect(363,209,50,50),
 				5],
 			"flameSword" : [
 				"flameSword",
-				transform.scale2x(image.load("resources/graphics/items/flameSword.png").convert_alpha()),
+				transform.scale2x(image.load("graphics/items/flameSword.png").convert_alpha()),
 				["A fire sword with an", "attack power of 7"],
 				(497,205),
 				Rect(497,205,50,50),
 				7],
 			"boat" : [
-				"boat", 
-				image.load("resources/graphics/items/boat.png").convert_alpha(),
+				"boat",
+				image.load("graphics/items/boat.png").convert_alpha(),
 				["Power that allows you","to travel on water."],
 				(422,200),
 				Rect(422,200,50,50)],
 			"speedBoots" : [
 				"speedBoots",
-				transform.scale(image.load("resources/graphics/items/speedBoots.png").convert_alpha(), (50,50)),
+				transform.scale(image.load("graphics/items/speedBoots.png").convert_alpha(), (50,50)),
 				["Boots that increase your","speed."],
 				(565,206),
 				Rect(565,206,50,50)
@@ -82,16 +82,16 @@ class Treasure:
 		# All collected items
 		self.collectedItems = set()
 		# For speed instead of drawing text
-		self.inventory = transform.scale2x(transform.scale2x(image.load("resources/graphics/misc/inventory.png").convert_alpha()))
-		self.settings = transform.scale2x(transform.scale2x(image.load("resources/graphics/misc/settings.png").convert_alpha()))
-		self.mapView = transform.scale2x(transform.scale2x(image.load("resources/graphics/misc/mapView.png").convert_alpha()))
-		self.smallMap = image.load("resources/graphics/map/smallMap.png")
+		self.inventory = transform.scale2x(transform.scale2x(image.load("graphics/misc/inventory.png").convert_alpha()))
+		self.settings = transform.scale2x(transform.scale2x(image.load("graphics/misc/settings.png").convert_alpha()))
+		self.mapView = transform.scale2x(transform.scale2x(image.load("graphics/misc/mapView.png").convert_alpha()))
+		self.smallMap = image.load("graphics/map/smallMap.png")
 
 		# Item placeholders.
-		self.placeholder = transform.scale2x(image.load("resources/graphics/misc/placeholder.png").convert_alpha())
-		self.sPlaceholder = image.load("resources/graphics/misc/dropDown.png").convert_alpha()
-		self.gemPlaceholder = transform.scale2x(image.load("resources/graphics/misc/gemPlaceholder.png").convert_alpha())
-		self.healthBar = transform.scale2x(image.load("resources/graphics/misc/healthBar.png").convert())
+		self.placeholder = transform.scale2x(image.load("graphics/misc/placeholder.png").convert_alpha())
+		self.sPlaceholder = image.load("graphics/misc/dropDown.png").convert_alpha()
+		self.gemPlaceholder = transform.scale2x(image.load("graphics/misc/gemPlaceholder.png").convert_alpha())
+		self.healthBar = transform.scale2x(image.load("graphics/misc/healthBar.png").convert())
 
 		self.inventoryRect = Rect(1028,140,40,40)
 		self.settingsRect = Rect(1028,187,40,40)
@@ -211,7 +211,7 @@ class Treasure:
 					self.mapViewDisplay(click)
 
 			else:
-				# After all the 
+				# After all the
 				if self.gems["earth"] and self.gems["fire"] and self.gems["water"]:
 					if not self.allGemsCollectedMsg:
 						message.botMessage("You have all the gems! Visit the temple!", False)

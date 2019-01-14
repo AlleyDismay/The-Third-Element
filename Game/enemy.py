@@ -10,30 +10,30 @@ from random import choice
 
 class Enemy(object):
 	""" Enemy class """
-	
+
 	def __init__(self):
 		# All enemies
 		self.enemies = ["an Olive Serpent", "a King Frog", "a Skeleton Dancer", "a Double Dragon"]
 		self.waterEnemies = ["a Swarly", "a Tentacruel"]
 		# Enemy data -> (sprites, position, attack power possibilities, location of health bar)
 		self.enemyData = {
-			"an Olive Serpent" : [[transform.scale2x(image.load("resources/graphics/enemies/Olive Serpant/%s.png"%str(i)).convert_alpha()) for i in range(3)],
+			"an Olive Serpent" : [[transform.scale2x(image.load("graphics/enemies/Olive Serpant/%s.png"%str(i)).convert_alpha()) for i in range(3)],
 									(191,217), [2,2,2,3], (175,183)],
-			"a King Frog" : [[transform.scale2x(image.load("resources/graphics/enemies/King Frog/%s.png"%str(i)).convert_alpha()) for i in range(3)],
+			"a King Frog" : [[transform.scale2x(image.load("graphics/enemies/King Frog/%s.png"%str(i)).convert_alpha()) for i in range(3)],
 								(121,174), [4,3,4,4,5], (137,149)],
-			"a Skeleton Dancer" : [[transform.scale2x(image.load("resources/graphics/enemies/Skeleton Dancer/%s.png"%str(i)).convert_alpha()) for i in range(3)],
+			"a Skeleton Dancer" : [[transform.scale2x(image.load("graphics/enemies/Skeleton Dancer/%s.png"%str(i)).convert_alpha()) for i in range(3)],
 								(141,244), [2,2,2,3,3,2], (151,202)],
-			"a Double Dragon" : [[transform.scale2x(image.load("resources/graphics/enemies/Double Dragon/%s.png"%str(i)).convert_alpha()) for i in range(4)],
+			"a Double Dragon" : [[transform.scale2x(image.load("graphics/enemies/Double Dragon/%s.png"%str(i)).convert_alpha()) for i in range(4)],
 								(161,214), [4,5,5,5], (174,168)]
 		}
 		self.waterEnemyData = {
-			"a Swarly" : [[transform.scale2x(transform.scale2x(image.load("resources/graphics/enemies/Swarly/%s.png"%str(i)).convert_alpha())) for i in range(6)],
+			"a Swarly" : [[transform.scale2x(transform.scale2x(image.load("graphics/enemies/Swarly/%s.png"%str(i)).convert_alpha())) for i in range(6)],
 									(191,252), [2,2,2,3,3], (188,206)],
-			"a Tentacruel" : [[transform.scale2x(transform.scale2x(image.load("resources/graphics/enemies/Tentacruel/%s.png"%str(i)).convert_alpha())) for i in range(10)],
+			"a Tentacruel" : [[transform.scale2x(transform.scale2x(image.load("graphics/enemies/Tentacruel/%s.png"%str(i)).convert_alpha())) for i in range(10)],
 								(155,204), [4,3,3,4,4,5], (164,163)]
 		}
 		# Other individual enemies (name, sprites, position, location of health bar, total health)
-		self.broth = ["Broth", [transform.scale2x(image.load("resources/graphics/enemies/Broth/%s.png"%str(i)).convert_alpha()) for i in range(7)],
+		self.broth = ["Broth", [transform.scale2x(image.load("graphics/enemies/Broth/%s.png"%str(i)).convert_alpha()) for i in range(7)],
 						(125,194), (132,161), 50, 20]
 		# Dictionary to reference custom enemies
 		self.customEnemies = {

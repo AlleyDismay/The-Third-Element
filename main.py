@@ -20,10 +20,11 @@ from json import load
 from random import randint
 from Game.const import *
 from Game.save import *
+from Game.story import Story
 
 # Imports
 classes = ["player", "maps", "message", "fade", "treasure",
-           "sound", "fight", "story", "chest"]
+           "sound", "fight", "chest"]
 for i in classes:
     exec("from Game.%s import %s"%(i, i.title()))
 
@@ -49,7 +50,7 @@ class Game:
         self.screen = display.set_mode((1086,600))
         self.screenW, self.screenH = 1086, 600
         display.set_caption("The Third Element")
-        display.set_icon(image.load("resources/graphics/misc/icon.png").convert_alpha())
+        display.set_icon(image.load("graphics/misc/icon.png").convert_alpha())
 
         # Play intro music
         if not mac:
@@ -57,15 +58,15 @@ class Game:
             mixer.music.play(loops=-1)
 
         # Fade into loading screen
-        #Fade().fadeDark(image.load("resources/graphics/misc/loading.png").convert(), self.screen, (0,0))
+        #Fade().fadeDark(image.load("graphics/misc/loading.png").convert(), self.screen, (0,0))
         #display.flip()
 
         # Startup / ending screens
-        self.startup = image.load("resources/graphics/misc/startup.png").convert()
-        self.ending = image.load("resources/graphics/misc/ending.png").convert()
+        self.startup = image.load("graphics/misc/startup.png").convert()
+        self.ending = image.load("graphics/misc/ending.png").convert()
         # Scrolling intro text
-        self.introTextBack = image.load("resources/graphics/misc/introTextBack.png").convert()
-        self.introText = image.load("resources/graphics/misc/introText.png").convert_alpha()
+        self.introTextBack = image.load("graphics/misc/introTextBack.png").convert()
+        self.introText = image.load("graphics/misc/introText.png").convert_alpha()
         self.introTextOver = False
         # Text y-coordinate
         self.introY = 600
@@ -74,7 +75,7 @@ class Game:
         self.enemyLocs = enemyPoints()
         self.moneyLocs = moneyPoints()
 
-        self.cursor = transform.scale2x(image.load("resources/graphics/misc/cursor.png").convert_alpha())
+        self.cursor = transform.scale2x(image.load("graphics/misc/cursor.png").convert_alpha())
         self.newGame = Rect(203,268,240,63)
         self.loadGame = Rect(626,268,254,63)
         self.startOver = True
@@ -510,8 +511,9 @@ class Game:
                         self.fight.render(self.maps.sceneName, self.fade,
                                           next, self.maps, click)
 
-                saveStats(self.treasure.gems["earth"], self.treasure.gems["fire"], self.treasure.gems["water"], self.treasure.health, self.treasure.money, self.treasure.collectedItems)
+                save(self.treasure)
         else:
+            save(treasure)
             self.player.die(click, self.treasure, self.maps, self.fight)
 
 

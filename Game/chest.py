@@ -10,7 +10,7 @@ from random import choice, randint
 
 class Chest:
 	""" Handles treasure chest actions """
-	
+
 	def __init__(self, screen, treasure, message, maps, player, fight, sound, fade):
 		self.screen = screen
 		self.treasure = treasure
@@ -20,8 +20,8 @@ class Chest:
 		self.fight = fight
 		self.sound = sound
 		self.fade = fade
-		self.chest = image.load("resources/graphics/items/chest.png")
-		self.openChest = image.load("resources/graphics/items/chest-opened.png")
+		self.chest = image.load("graphics/items/chest.png")
+		self.openChest = image.load("graphics/items/chest-opened.png")
 		# Possible random prizes (basic)
 		self.prizes = ["money", "health", "enemy"]
 
@@ -149,7 +149,7 @@ class Chest:
 								self.treasure.render(self.screen, True, False, False, self.message)
 								self.message.botMessage("You have obtained the fire gem!", False)
 								self.treasure.gems["fire"] = True
-								pause(1300)	
+								pause(1300)
 							elif prize == "health":
 								reward = randint(10,20)
 								drawChests()

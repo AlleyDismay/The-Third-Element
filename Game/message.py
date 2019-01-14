@@ -6,17 +6,18 @@
 # ICS3U Final Project
 
 from pygame import *
+from collections import deque
 
 class Message(object):
 	""" Display message dialogues """
-	
+
 	def __init__(self, screen):
 		self.screen = screen
-		self.background = image.load("resources/graphics/misc/msgBanner.png").convert_alpha()
-		self.optionsBg = transform.scale(image.load("resources/graphics/misc/optionsBox.png").convert_alpha(),(200,150))
-		self.select = transform.scale(image.load("resources/graphics/misc/choose.png").convert_alpha(),(70,12))
-		self.font = font.Font("resources/fonts/Cardinal.ttf", 40)
-		self.enterFont = font.Font("resources/fonts/Cardinal.ttf", 20)
+		self.background = image.load("graphics/misc/msgBanner.png").convert_alpha()
+		self.optionsBg = transform.scale(image.load("graphics/misc/optionsBox.png").convert_alpha(),(200,150))
+		self.select = transform.scale(image.load("graphics/misc/choose.png").convert_alpha(),(70,12))
+		self.font = font.Font("fonts/Cardinal.ttf", 40)
+		self.enterFont = font.Font("fonts/Cardinal.ttf", 20)
 		self.black = (0,0,0)
 		self.showing = True
 		self.enemyStatsShowing = True
@@ -26,6 +27,8 @@ class Message(object):
 
 	def narration(self, story, next, location):
 		""" Takes list of text as an argument and displays the text """
+		#text = dequeue(story)
+		#text.popleft()
 		length = len(story)
 		# If user presses enter, change text or hide message box
 		if next:
@@ -100,6 +103,7 @@ class Message(object):
 		""" Display one message at a time """
 		if self.showing:
 			# Render message based on location
+			# "enterShow" controls whether the [Enter] prompt appears.
 			if location == "top":
 				self.topMessage(text, enterShow)
 			else:

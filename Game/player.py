@@ -6,7 +6,8 @@
 # ICS3U Final Project
 
 from pygame import *
-from sys import exit as abandon
+from Game.save import save
+from sys import exit
 
 class Player(object):
 	""" Main player class """
@@ -15,18 +16,23 @@ class Player(object):
 		self.screen = screen
 		self.message = message
 		self.fade = fade
+
+		# Attack power
+		self.power = 1
+		self.weapon = ""
+
 		# Use list comprehension to create lists of animated sprites in a dictionary
 		self.sprites = {
-			"left" : [image.load("resources/graphics/player/lMove/%s.gif"%str(i)).convert_alpha() for i in range(4)],
-			"right": [image.load("resources/graphics/player/rMove/%s.png"%str(i)).convert_alpha() for i in range(4)],
-			"down": [image.load("resources/graphics/player/dMove/%s.gif"%str(i)).convert_alpha() for i in range(4)],
-			"up": [image.load("resources/graphics/player/uMove/%s.gif"%str(i)).convert_alpha() for i in range(4)]
+			"left" : [image.load("graphics/player/lMove/%s.gif"%str(i)).convert_alpha() for i in range(4)],
+			"right": [image.load("graphics/player/rMove/%s.png"%str(i)).convert_alpha() for i in range(4)],
+			"down": [image.load("graphics/player/dMove/%s.gif"%str(i)).convert_alpha() for i in range(4)],
+			"up": [image.load("graphics/player/uMove/%s.gif"%str(i)).convert_alpha() for i in range(4)]
 		}
 		self.boatSprites = {
-			"left" : [image.load("resources/graphics/player/boat/lMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
-			"right": [image.load("resources/graphics/player/boat/rMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
-			"down": [image.load("resources/graphics/player/boat/dMove/%s.png"%str(i)).convert_alpha() for i in range(5)],
-			"up": [image.load("resources/graphics/player/boat/uMove/%s.png"%str(i)).convert_alpha() for i in range(5)]
+			"left" : [image.load("graphics/player/boat/lMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
+			"right": [image.load("graphics/player/boat/rMove/%s.png"%str(i)).convert_alpha() for i in range(8)],
+			"down": [image.load("graphics/player/boat/dMove/%s.png"%str(i)).convert_alpha() for i in range(5)],
+			"up": [image.load("graphics/player/boat/uMove/%s.png"%str(i)).convert_alpha() for i in range(5)]
 		}
 		# Player's starting image
 		self.image = self.sprites["down"][0]
@@ -127,7 +133,7 @@ class Player(object):
 		self.isAlive = True
 
 		# Game over screen
-		self.gameOver = image.load("resources/graphics/misc/gameOver.png").convert()
+		self.gameOver = image.load("graphics/misc/gameOver.png").convert()
 		self.continueRect = Rect(139,482,180,65)
 		self.abandonRect = Rect(453,488,180,65)
 
@@ -178,6 +184,13 @@ class Player(object):
 		# Set new speeds
 		self.speed = self.speeds[scene]
 		screenW, screenH = 1086, 600
+
+
+		# Set equipped weapon.
+		if self.weapon:
+			self.power = treasure.items[self.weapon][5]
+		else:
+			self.weapon = "flameSword"
 
 		# Keep track of what player sprites to use
 		s = self.boatSprites if self.inBoat else self.sprites
@@ -326,8 +339,10 @@ class Player(object):
 			self.fade.fadeDark(surf, self.screen, (0,0))
 
 			# Save results to file
-			saveStats()
-			abandon(0)
+			# Saving is done through the fight, since you can't die any other way.
+
+			# exit game
+			exit(0)
 
 
 	def render(self):

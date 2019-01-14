@@ -1,12 +1,13 @@
-def saveStats(earth, fire, water, health, money, items):
+def save(treasure):
     f = open("save.dat", "w")
-    if earth: f.write("earth ")
-    if fire: f.write("fire ")
-    if water: f.write("water ")
+    gems = treasure.gems
+    if gems["earth"]: f.write("earth ")
+    if gems["fire"]: f.write("fire ")
+    if gems["water"]: f.write("water ")
     f.write("\n")
-    f.write(str(health)+"\n")
-    f.write(str(money)+"\n")
-    for i in items:
+    f.write(str(treasure.health)+"\n")
+    f.write(str(treasure.money)+"\n")
+    for i in treasure.collectedItems:
         f.write(i + " ")
     f.write("\n")
-    f.close() 
+    f.close()
